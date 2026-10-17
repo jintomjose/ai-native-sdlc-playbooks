@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI-native SDLC: four playbooks compared</title>
+<meta name="description" content="Anthropic, Atlassian, Google Cloud and Shopify on the AI-native software development lifecycle: where they agree, where they disagree, and how much is measured. A personal synthesis by Jinto Jose.">
+<meta property="og:title" content="AI-native SDLC: four playbooks compared">
+<meta property="og:description" content="Where Anthropic, Atlassian, Google Cloud and Shopify agree, disagree, and what is actually measured.">
+<meta property="og:image" content="https://jintomjose.github.io/ai-native-sdlc-playbooks/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F6F2EA;--paper:#FFFDF8;--ink:#17202B;--soft:#4A5563;--muted:#7A818C;--line:#E2DACB;
+  --night:#10151C;--night2:#1B2330;--accent:#E8561A;--accent-soft:#FFE6D6;
+  --anth:#C2603A;--atl:#1868DB;--goo:#C08A00;--shop:#007A5A;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,sans-serif;font-size:18px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+section{padding:96px 0;border-top:1px solid var(--line)}
+section.dark{background:var(--night);color:#EEF0F3;border-top:none}
+.kicker{font-size:13px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+h1{font-size:clamp(40px,7vw,80px);line-height:1.02;letter-spacing:-.035em;font-weight:800}
+h2{font-size:clamp(30px,4.6vw,52px);line-height:1.06;letter-spacing:-.03em;font-weight:800;max-width:860px}
+h3{font-size:22px;font-weight:800;letter-spacing:-.01em;line-height:1.2}
+.lead{font-size:clamp(18px,2.2vw,22px);color:var(--soft);max-width:760px;margin-top:20px}
+.dark .lead{color:#AEB7C4}
+em.hl{font-style:normal;color:var(--accent)}
+.dark em.hl{color:#FF8A4C}
+
+/* progress + nav */
+.bar{position:fixed;top:0;left:0;height:4px;background:var(--accent);width:0;z-index:20}
+nav.top{position:sticky;top:0;z-index:10;background:rgba(246,242,234,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav.top .wrap{display:flex;gap:22px;align-items:center;height:56px;overflow-x:auto;scrollbar-width:none}
+nav.top .wrap::-webkit-scrollbar{display:none}
+nav.top a{font-size:14px;font-weight:600;color:var(--soft);text-decoration:none;white-space:nowrap}
+nav.top a:hover{color:var(--accent)}
+nav.top .brand{color:var(--ink);font-weight:800}
+
+/* hero */
+.hero{padding:88px 0 96px;border-top:none}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px}
+.chip{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:700;padding:9px 16px;border-radius:999px;background:var(--paper);border:1px solid var(--line)}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block;flex:none}
+.byline{margin-top:36px;font-size:15px;color:var(--muted)}
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.btn{display:inline-block;padding:13px 22px;border-radius:999px;font-weight:700;font-size:15px;text-decoration:none;border:2px solid var(--ink)}
+.btn.primary{background:var(--ink);color:#fff}
+.btn:hover{border-color:var(--accent)}
+.btn.primary:hover{background:var(--accent)}
+
+/* grid cards */
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:44px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:24px;border-top:6px solid var(--c,var(--accent))}
+.card .co{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--c)}
+.card .q{font-size:21px;font-weight:800;line-height:1.2;margin:12px 0 10px;letter-spacing:-.01em}
+.card p{font-size:15.5px;color:var(--soft)}
+.card .type{display:inline-block;margin-top:14px;font-size:12.5px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--bg);color:var(--muted)}
+
+/* agree list */
+.agree{margin-top:44px;display:grid;gap:14px}
+.agree div{display:grid;grid-template-columns:56px 1fr;gap:18px;align-items:start;background:var(--night2);border-radius:16px;padding:22px 24px}
+.agree b{display:block;font-size:21px;line-height:1.25;color:#fff;margin-bottom:4px}
+.agree span{color:#AEB7C4;font-size:16px}
+.agree i{font-style:normal;width:46px;height:46px;border-radius:50%;background:var(--accent);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:20px}
+.callout{margin-top:30px;font-size:22px;font-weight:700;color:#fff;border-left:6px solid var(--accent);padding:6px 0 6px 20px;max-width:760px}
+
+/* lifecycle */
+.legend{display:flex;flex-wrap:wrap;gap:18px;margin-top:28px;font-size:14px;font-weight:700;color:var(--soft)}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.stages{margin-top:30px;display:grid;gap:18px}
+.stage{display:grid;grid-template-columns:150px 1fr;gap:20px;background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:22px}
+.stage .nm{font-size:26px;font-weight:800;letter-spacing:-.02em}
+.stage .nm small{display:block;font-size:13px;color:var(--muted);font-weight:600;letter-spacing:0;margin-top:4px}
+.cells{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.cell{border-radius:12px;padding:12px 14px;font-size:15px;line-height:1.4;background:var(--bg);border-left:5px solid var(--c)}
+.cell.gap{background:repeating-linear-gradient(45deg,#F1ECE2,#F1ECE2 6px,#EBE4D7 6px,#EBE4D7 12px);color:var(--muted);font-style:italic}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;background:#EFE8DB;padding:1px 6px;border-radius:6px}
+.dark code{background:#263040;color:#FFD2BC}
+
+/* disagreements */
+.dis{margin-top:44px;display:grid;gap:22px}
+.d{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:30px}
+.d h3{font-size:26px;margin-bottom:22px}
+.spectrum{position:relative;height:10px;border-radius:99px;background:linear-gradient(90deg,#E9E2D5,#E9E2D5);margin:44px 8px 70px}
+.spectrum .end{position:absolute;top:22px;font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.spectrum .end.l{left:-8px}.spectrum .end.r{right:-8px;text-align:right}
+.pin{position:absolute;top:50%;transform:translate(-50%,-50%);width:24px;height:24px;border-radius:50%;background:var(--c);border:4px solid var(--paper);box-shadow:0 0 0 2px var(--c)}
+.pin span{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);font-size:13px;font-weight:800;color:var(--c);white-space:nowrap}
+.d .note{font-size:16px;color:var(--soft);margin-top:4px}
+.d .why{margin-top:16px;font-weight:700;font-size:16px;color:var(--accent)}
+
+/* evidence */
+.ev{margin-top:44px;display:grid;gap:16px}
+.e{display:grid;grid-template-columns:200px 1fr 160px;gap:24px;align-items:center;background:var(--night2);border-radius:18px;padding:24px 26px;border-left:6px solid var(--c)}
+.e .co{font-weight:800;font-size:22px;color:#fff}
+.e .co small{display:block;font-size:13px;font-weight:600;color:#8FA0B8;margin-top:4px}
+.e ul{list-style:none;display:flex;flex-wrap:wrap;gap:8px}
+.e li{font-size:14.5px;background:#263040;color:#E7EBF0;padding:6px 12px;border-radius:999px}
+.e li.none{background:transparent;border:1px dashed #4A5768;color:#8FA0B8}
+.e .cav{font-size:13.5px;color:#AEB7C4;line-height:1.35}
+.meter{display:flex;gap:4px;margin-top:10px}
+.meter i{flex:1;height:8px;border-radius:4px;background:#2E3848}
+.meter i.on{background:var(--c)}
+
+/* governance */
+.gov{margin-top:40px;background:var(--paper);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.grow{display:grid;grid-template-columns:1.6fr repeat(4,1fr);align-items:center;padding:16px 24px;border-top:1px solid var(--line)}
+.grow:first-child{border-top:none;background:#F1ECE2;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--soft)}
+.grow > div:first-child{font-weight:700;font-size:16px}
+.dots{display:flex;gap:6px}
+.dots i{width:14px;height:14px;border-radius:50%;background:#E5DED1}
+.dots i.on{background:var(--c)}
+.fine{font-size:14px;color:var(--muted);margin-top:14px}
+
+/* take */
+.take{margin-top:44px;display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.take .card p{font-size:17px;color:var(--ink)}
+.take .card .q{font-size:24px}
+
+/* steps */
+.steps{margin-top:44px;display:grid;grid-template-columns:repeat(5,1fr);gap:12px;counter-reset:s}
+.step{background:var(--night2);border-radius:16px;padding:22px 18px;position:relative}
+.step::before{counter-increment:s;content:counter(s);display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:var(--accent);color:#fff;font-weight:800;margin-bottom:14px}
+.step b{display:block;color:#fff;font-size:18px;margin-bottom:6px}
+.step span{font-size:14.5px;color:#AEB7C4;display:block}
+.step small{display:block;margin-top:10px;font-size:12.5px;font-weight:700;color:#FF8A4C}
+
+/* decisions */
+.decide{margin-top:40px;display:grid;gap:16px}
+.q3{display:grid;grid-template-columns:70px 1fr;gap:20px;align-items:center;background:var(--paper);border:2px solid var(--ink);border-radius:18px;padding:22px 26px}
+.q3 i{font-style:normal;font-size:44px;font-weight:800;color:var(--accent);line-height:1}
+.q3 b{font-size:21px;line-height:1.3}
+
+/* final */
+.final{text-align:left}
+.links{margin-top:34px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.links a{display:block;text-decoration:none;background:var(--night2);border-radius:16px;padding:22px;color:#fff;border:1px solid #2C3646}
+.links a:hover{border-color:var(--accent)}
+.links b{display:block;font-size:18px;margin-bottom:6px}
+.links span{font-size:14.5px;color:#AEB7C4}
+.src{margin-top:56px;font-size:14px;color:#8FA0B8;line-height:1.7}
+.src a{color:#C9D0DA}
+footer{padding:28px 0 48px;background:var(--night);color:#6F7B8C;font-size:13px}
+
+@media (max-width:900px){
+  .grid4{grid-template-columns:repeat(2,1fr)}
+  .stage{grid-template-columns:1fr}
+  .cells{grid-template-columns:repeat(2,1fr)}
+  .e{grid-template-columns:1fr;gap:14px}
+  .steps{grid-template-columns:1fr 1fr}
+  .take{grid-template-columns:1fr}
+  .links{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  body{font-size:17px}
+  .wrap{padding:0 16px}
+  section{padding:72px 0}
+  .grid4{grid-template-columns:1fr}
+  .cells{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr}
+  .grow{grid-template-columns:1fr 1fr;row-gap:10px;padding:16px}
+  .grow > div:first-child{grid-column:1/-1}
+  .grow:first-child{display:none}
+  .grow .dots::before{content:attr(data-co);font-size:12px;font-weight:700;color:var(--muted);margin-right:8px;min-width:68px}
+  .q3{grid-template-columns:48px 1fr;padding:18px}
+  .q3 i{font-size:34px}
+  .spectrum .pin span{font-size:11.5px}
+}
+@media (min-width:561px){.grow .dots::before{content:none}}
+</style>
+</head>
+<body>
+<div class="bar" id="bar"></div>
+
+<nav class="top"><div class="wrap">
+  <a class="brand" href="#top">AI-native SDLC</a>
+  <a href="#sources">4 sources</a>
+  <a href="#agree">Agree</a>
+  <a href="#lifecycle">Lifecycle</a>
+  <a href="#disagree">Disagree</a>
+  <a href="#evidence">Evidence</a>
+  <a href="#governance">Governance</a>
+  <a href="#take">Take</a>
+  <a href="#decide">Decide</a>
+</div></nav>
+
+<header class="hero" id="top"><div class="wrap">
+  <div class="kicker">A personal synthesis · October 2026</div>
+  <h1>Four companies.<br>Four AI-native <em class="hl">SDLCs.</em></h1>
+  <p class="lead">What Anthropic, Atlassian, Google Cloud and Shopify say about building software once agents write most of the code. Where they agree, where they genuinely disagree, and how much of it is actually measured.</p>
+  <div class="chips">
+    <span class="chip"><i class="dot" style="background:var(--anth)"></i>Anthropic</span>
+    <span class="chip"><i class="dot" style="background:var(--atl)"></i>Atlassian</span>
+    <span class="chip"><i class="dot" style="background:var(--goo)"></i>Google Cloud</span>
+    <span class="chip"><i class="dot" style="background:var(--shop)"></i>Shopify</span>
+  </div>
+  <div class="btns">
+    <a class="btn primary" href="https://github.com/jintomjose/ai-native-sdlc-playbooks">Open the research repo</a>
+    <a class="btn" href="four-ai-sdlc-playbooks.pdf">Download the PDF</a>
+  </div>
+  <p class="byline">By <a href="https://www.linkedin.com/in/jintojose">Jinto Jose</a>. My own reading of public material, not my employer's view. Not reviewed or endorsed by any of the four companies.</p>
+</div></header>
+
+<section id="sources"><div class="wrap">
+  <div class="kicker">01 · Four sources, four altitudes</div>
+  <h2>They're not four answers to one question. They answer <em class="hl">four different questions.</em></h2>
+  <div class="grid4">
+    <div class="card" style="--c:var(--anth)"><div class="co">Anthropic</div><div class="q">What artifact does each stage commit?</div><p>Six stages, each ending in a committed file. Skills advise, hooks enforce.</p><span class="type">Vendor playbook · Aug 2026</span></div>
+    <div class="card" style="--c:var(--atl)"><div class="co">Atlassian</div><div class="q">What must the platform provide?</div><p>Five workflow shifts standing on two foundations: a context graph and measurement.</p><span class="type">Vendor playbook · Oct 2026</span></div>
+    <div class="card" style="--c:var(--goo)"><div class="co">Google Cloud</div><div class="q">What can AI do in each phase?</div><p>A capability map across five phases, plus risks and best practices.</p><span class="type">Marketing page · Sep 2026</span></div>
+    <div class="card" style="--c:var(--shop)"><div class="co">Shopify</div><div class="q">What happens when a whole company goes AI-first?</div><p>A five-year operating story: enablement layer, culture, and lessons learned the hard way.</p><span class="type">Case study · 2026</span></div>
+  </div>
+</div></section>
+
+<section class="dark" id="agree"><div class="wrap">
+  <div class="kicker">02 · Settled ground</div>
+  <h2>Five things all four agree on</h2>
+  <p class="lead">Four organisations with different incentives reach the same conclusions.</p>
+  <div class="agree">
+    <div><i>1</i><p><b>Code generation is no longer the constraint.</b><span>The bottleneck moved to the work around the code: planning, review, maintenance.</span></p></div>
+    <div><i>2</i><p><b>Human review becomes the binding constraint.</b><span>Anthropic, Atlassian and Shopify reach this independently. Google names it as a risk.</span></p></div>
+    <div><i>3</i><p><b>Context quality decides output quality.</b><span>Not model choice. What the agent is told about your systems is the differentiator.</span></p></div>
+    <div><i>4</i><p><b>Humans stay accountable for judgement.</b><span>Agents execute and enforce. People decide, approve and own.</span></p></div>
+    <div><i>5</i><p><b>It's an operating-model change, not a tool purchase.</b><span>Explicit for Atlassian and Shopify, implied by Anthropic, not stated by Google.</span></p></div>
+  </div>
+  <p class="callout">When organisations competing for the same budget agree this precisely, the agreement is the finding.</p>
+</div></section>
+
+<section id="lifecycle"><div class="wrap">
+  <div class="kicker">03 · Stage by stage</div>
+  <h2>The same lifecycle, <em class="hl">four treatments</em></h2>
+  <div class="legend">
+    <span><i class="dot" style="background:var(--anth)"></i>Anthropic</span>
+    <span><i class="dot" style="background:var(--atl)"></i>Atlassian</span>
+    <span><i class="dot" style="background:var(--goo)"></i>Google Cloud</span>
+    <span><i class="dot" style="background:var(--shop)"></i>Shopify</span>
+  </div>
+  <div class="stages">
+    <div class="stage"><div class="nm">Plan<small>capture the problem</small></div><div class="cells">
+      <div class="cell" style="--c:var(--anth)"><code>intent.md</code> committed by the person with the problem</div>
+      <div class="cell" style="--c:var(--atl)">AI drafts specs from code and customer context</div>
+      <div class="cell" style="--c:var(--goo)">NLP turns feedback into requirements</div>
+      <div class="cell" style="--c:var(--shop)">Non-engineers build their own tools</div></div></div>
+    <div class="stage"><div class="nm">Design<small>shape the solution</small></div><div class="cells">
+      <div class="cell" style="--c:var(--anth)"><code>spec.md</code> constrained by org skills</div>
+      <div class="cell" style="--c:var(--atl)">A continuous thread; designers ship UI code</div>
+      <div class="cell" style="--c:var(--goo)">Pattern and compliance recommendations</div>
+      <div class="cell" style="--c:var(--shop)">Designers ship prototypes, not mockups</div></div></div>
+    <div class="stage"><div class="nm">Build<small>write the code</small></div><div class="cells">
+      <div class="cell" style="--c:var(--anth)"><code>plan.md</code> approved before any code</div>
+      <div class="cell" style="--c:var(--atl)">Agents plus context graph; context compounds</div>
+      <div class="cell" style="--c:var(--goo)">Scaffolding and boilerplate absorbed</div>
+      <div class="cell" style="--c:var(--shop)">Multi-tool by choice; no single standard</div></div></div>
+    <div class="stage"><div class="nm">Test<small>prove it works</small></div><div class="cells">
+      <div class="cell" style="--c:var(--anth)">Self-checking feedback loop + continuous evals (20–50 real tasks)</div>
+      <div class="cell gap" style="--c:var(--atl)">No standalone Test stage, on purpose: folded into development and review</div>
+      <div class="cell" style="--c:var(--goo)">Generated edge cases and regression suites</div>
+      <div class="cell" style="--c:var(--shop)">Automated testing; reversion rates unchanged</div></div></div>
+    <div class="stage"><div class="nm">Deploy<small>review and ship</small></div><div class="cells">
+      <div class="cell" style="--c:var(--anth)">Layered AI review; hooks as approval gates; the agent can't approve its own code</div>
+      <div class="cell" style="--c:var(--atl)">AI reviews first; standards enforced centrally</div>
+      <div class="cell" style="--c:var(--goo)">Cloud Deploy, Logging, Monitoring</div>
+      <div class="cell" style="--c:var(--shop)">Human PR review still mandatory</div></div></div>
+    <div class="stage"><div class="nm">Maintain<small>run and learn</small></div><div class="cells">
+      <div class="cell" style="--c:var(--anth)">Monitoring breaches write the next <code>intent.md</code></div>
+      <div class="cell" style="--c:var(--atl)">Agents triage; loops resolve routine work</div>
+      <div class="cell" style="--c:var(--goo)">ML anomaly detection on logs</div>
+      <div class="cell" style="--c:var(--shop)">Comprehension debt as the live risk</div></div></div>
+  </div>
+</div></section>
+
+<section id="disagree"><div class="wrap">
+  <div class="kicker">04 · Where they part ways</div>
+  <h2>Three <em class="hl">real</em> disagreements</h2>
+  <p class="lead">Not differences in emphasis. Places where following one source means not following another.</p>
+  <div class="dis">
+    <div class="d"><h3>1. Where does the source of truth live?</h3>
+      <div class="spectrum"><span class="end l">The repo</span><span class="end r">The context graph</span>
+        <div class="pin" style="left:6%;--c:var(--anth)"><span style="left:0;transform:none">Anthropic</span></div>
+        <div class="pin" style="left:94%;--c:var(--atl)"><span style="left:auto;right:0;transform:none">Atlassian</span></div></div>
+      <p class="note">Anthropic: markdown artifacts in git are authoritative; the commit history is the audit trail. Atlassian: one connected context layer across tools is authoritative, and the repo is one input.</p>
+      <p class="why">An architecture decision, and expensive to reverse.</p></div>
+    <div class="d"><h3>2. One standard tool, or many?</h3>
+      <div class="spectrum"><span class="end l">One governed surface</span><span class="end r">Many tools</span>
+        <div class="pin" style="left:6%;--c:var(--anth)"><span style="left:0;transform:none;color:var(--ink)">Anthropic + Atlassian</span></div>
+        <div class="pin" style="left:15%;--c:var(--atl)"></div>
+        <div class="pin" style="left:94%;--c:var(--shop)"><span style="left:auto;right:0;transform:none">Shopify</span></div></div>
+      <p class="note">Shopify: "we don't know yet what's gonna win." Centralise the plumbing, not the choice.</p>
+      <p class="why">Governance appetite decides this, not engineering preference.</p></div>
+    <div class="d"><h3>3. How hard are the limits?</h3>
+      <div class="spectrum"><span class="end l">Hard blocks</span><span class="end r">Guidance only</span>
+        <div class="pin" style="left:6%;--c:var(--anth)"><span style="left:0;transform:none">Anthropic</span></div>
+        <div class="pin" style="left:58%;--c:var(--shop)"><span>Shopify</span></div>
+        <div class="pin" style="left:94%;--c:var(--goo)"><span style="left:auto;right:0;transform:none">Google</span></div></div>
+      <p class="note">Anthropic: hooks that block, settings engineers can't override. Shopify: iteration limits and spend alerts, deliberately no hard caps. Google: practices, no enforcement mechanism.</p>
+      <p class="why">Regulated organisations will land near Anthropic. Know what it costs in developer friction.</p></div>
+  </div>
+</div></section>
+
+<section class="dark" id="evidence"><div class="wrap">
+  <div class="kicker">05 · Measured or asserted?</div>
+  <h2>Not one of the four publishes a <em class="hl">methodology.</em></h2>
+  <p class="lead">Every number is a vendor claim. Directional, not a benchmark to commit to.</p>
+  <div class="ev">
+    <div class="e" style="--c:var(--atl)"><div class="co">Atlassian<small>Strongest numbers</small><div class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div></div>
+      <ul><li>+44% agent accuracy with context graph</li><li>−48% tokens</li><li>Cycle time 11.5 → 6.7 days</li><li>51% of vulnerabilities auto-resolved</li></ul>
+      <div class="cav">Self-reported internal benchmarks.</div></div>
+    <div class="e" style="--c:var(--shop)"><div class="co">Shopify<small>Most credible context</small><div class="meter"><i class="on"></i><i class="on"></i><i></i><i></i></div></div>
+      <ul><li>~20% productivity</li><li>Reversion rates unchanged as output rose</li></ul>
+      <div class="cav">Farhan Thawar has since said on X the 20% was his own rough number.</div></div>
+    <div class="e" style="--c:var(--anth)"><div class="co">Anthropic<small>Best measurement design</small><div class="meter"><i class="on"></i><i></i><i></i><i></i></div></div>
+      <ul><li class="none">No outcome figures</li><li>A leading and lagging indicator per play</li></ul>
+      <div class="cav">Tells you what to measure, not what they measured.</div></div>
+    <div class="e" style="--c:var(--goo)"><div class="co">Google Cloud<small>Weakest evidence</small><div class="meter"><i></i><i></i><i></i><i></i></div></div>
+      <ul><li class="none">No figures</li><li class="none">No customers</li><li class="none">No research cited</li></ul>
+      <div class="cav">Six benefits asserted, none evidenced.</div></div>
+  </div>
+</div></section>
+
+<section id="governance"><div class="wrap">
+  <div class="kicker">06 · Governance</div>
+  <h2>Who gives a regulated organisation the most to work with?</h2>
+  <p class="lead">Scored on what you'd need to show an auditor. Three dots means explicit, implementable guidance.</p>
+  <div class="gov" id="gov"></div>
+  <p class="fine">My reading of the published material, not a vendor assessment.</p>
+</div></section>
+
+<section id="take"><div class="wrap">
+  <div class="kicker">07 · Not a winner</div>
+  <h2>Four different contributions to <em class="hl">one approach</em></h2>
+  <div class="take">
+    <div class="card" style="--c:var(--anth)"><div class="co">From Anthropic</div><div class="q">The artifact chain and the enforcement model</div><p>Every stage commits a file the next stage reads; the commit history is the audit trail. Skills advise, hooks block. The part that survives contact with auditors.</p></div>
+    <div class="card" style="--c:var(--atl)"><div class="co">From Atlassian</div><div class="q">The operating model and measurement discipline</div><p>Context is a platform investment, not a per-team effort. Measure before you scale, so you can tell real gains from hype.</p></div>
+    <div class="card" style="--c:var(--goo)"><div class="co">From Google Cloud</div><div class="q">The risk framing and the review policy</div><p>Security flaws in generated code, IP exposure, comprehension debt, and the rule that generated code gets no exemption from review.</p></div>
+    <div class="card" style="--c:var(--shop)"><div class="co">From Shopify</div><div class="q">The adoption mechanics</div><p>Nudge, showcase, make usage visible. Match the tool to the user. Protect comprehension as hard as you push adoption.</p></div>
+  </div>
+</div></section>
+
+<section class="dark" id="composite"><div class="wrap">
+  <div class="kicker">08 · A composite approach</div>
+  <h2>In the order things <em class="hl">have to exist</em></h2>
+  <div class="steps">
+    <div class="step"><b>Context and artifacts</b><span>One source of truth per artifact. Start the committed-artifact chain.</span><small>Anthropic + Atlassian</small></div>
+    <div class="step"><b>Measurement</b><span>Quantitative and qualitative baselines before scaling adoption.</span><small>Atlassian</small></div>
+    <div class="step"><b>Review policy</b><span>Generated code gets no exemption from review or scanning.</span><small>Google + Shopify</small></div>
+    <div class="step"><b>Enforceable gates</b><span>Hooks and managed settings for controls that must always hold.</span><small>Anthropic</small></div>
+    <div class="step"><b>Adoption mechanics</b><span>Nudge and make usage visible. No mandate, no punishment.</span><small>Shopify</small></div>
+  </div>
+</div></section>
+
+<section id="decide"><div class="wrap">
+  <div class="kicker">09 · Your move</div>
+  <h2>Nobody disagrees about the destination. Three decisions are <em class="hl">yours to make.</em></h2>
+  <div class="decide">
+    <div class="q3"><i>1</i><b>Repo or platform graph as your source of truth, and for which artifacts?</b></div>
+    <div class="q3"><i>2</i><b>One standardised agent surface, or many tools under a common enablement layer?</b></div>
+    <div class="q3"><i>3</i><b>Hard blocking gates, or alerts and caps that keep experimentation alive?</b></div>
+  </div>
+</div></section>
+
+<section class="dark final"><div class="wrap">
+  <div class="kicker">Go deeper</div>
+  <h2>Everything behind this page is open.</h2>
+  <div class="links">
+    <a href="https://github.com/jintomjose/ai-native-sdlc-playbooks"><b>Research repo →</b><span>Full notes per source, tables and sources.</span></a>
+    <a href="https://github.com/jintomjose/ai-native-sdlc-playbooks/blob/main/research/self-assessment.md"><b>Self-assessment →</b><span>Score your organisation on 16 dimensions.</span></a>
+    <a href="https://github.com/jintomjose/mini-software-factory"><b>Mini software factory →</b><span>The artifact chain in a working setup.</span></a>
+  </div>
+  <div class="src" id="srcs">
+    Sources: Anthropic, <a href="https://claude.com/blog/the-ai-native-sdlc-playbook">The AI-native SDLC playbook</a> (Louis Claxton, 21 Aug 2026) ·
+    Atlassian, <a href="https://www.atlassian.com/blog/ai-at-work/ai-sdlc-transformation-playbook">The AI SDLC transformation playbook</a> (Matthew Canham, 1 Oct 2026) ·
+    Google Cloud, <a href="https://cloud.google.com/use-cases/ai-sdlc">AI in the Software Development Life Cycle</a> (updated 21 Sep 2026) ·
+    Bessemer Venture Partners, <a href="https://www.bvp.com/atlas/inside-shopifys-ai-first-engineering-playbook">Inside Shopify's AI-first engineering playbook</a> (2026).
+    All frameworks, figures and quotes belong to their publishers. The synthesis and scoring are mine.
+  </div>
+</div></section>
+<footer><div class="wrap">© 2026 Jinto Jose · CC BY 4.0 · Personal research, not my employer's view.</div></footer>
+
+<script>
+const rows=[["Audit trail",3,3,1,1],["Enforceable gates (block, not advise)",3,2,1,1],["Separation of duties",3,3,1,2],["Data residency / tenancy controls",3,2,2,1],["Measurement and reporting",2,3,1,2],["Change-management fit",3,2,1,1]];
+const cos=[["Anthropic","--anth"],["Atlassian","--atl"],["Google","--goo"],["Shopify","--shop"]];
+let h='<div class="grow"><div>Dimension</div>'+cos.map(c=>'<div>'+c[0]+'</div>').join('')+'</div>';
+for(const r of rows){h+='<div class="grow"><div>'+r[0]+'</div>';for(let i=0;i<4;i++){h+='<div class="dots" data-co="'+cos[i][0]+'" style="--c:var('+cos[i][1]+')">'+[0,1,2].map(k=>'<i class="'+(k<r[i+1]?'on':'')+'"></i>').join('')+'</div>'}h+='</div>'}
+document.getElementById('gov').innerHTML=h;
+const bar=document.getElementById('bar');
+addEventListener('scroll',()=>{const d=document.documentElement;bar.style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%'},{passive:true});
+</script>
+</body>
+</html>
