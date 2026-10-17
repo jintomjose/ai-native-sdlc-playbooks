@@ -173,6 +173,55 @@ footer{padding:28px 0 48px;background:var(--night);color:#6F7B8C;font-size:13px}
 }
 @media (min-width:561px){.grow .dots::before{content:none}}
 .dark .kicker{color:#C084FC}
+
+/* ===== Liquid Glass layer (Notio Spiritus violet) ===== */
+:root{--mat:rgba(255,253,248,.74);--hair:rgba(255,255,255,.85);--matd:rgba(30,26,46,.66);--haird:rgba(255,255,255,.10);--blur:blur(24px) saturate(1.4)}
+body{background:#F6F2EA}
+section{border-top:none;background:
+  radial-gradient(700px 420px at 95% 0%,rgba(167,139,250,.40),transparent 70%),
+  radial-gradient(600px 420px at 0% 85%,rgba(216,180,254,.38),transparent 70%)}
+section.hero{background:
+  radial-gradient(760px 520px at 88% 10%,rgba(167,139,250,.60),transparent 70%),
+  radial-gradient(620px 460px at 8% 95%,rgba(216,180,254,.55),transparent 70%),
+  radial-gradient(500px 360px at 55% 60%,rgba(124,58,237,.12),transparent 70%)}
+section.dark{background:
+  radial-gradient(760px 520px at 92% 0%,rgba(124,58,237,.50),transparent 70%),
+  radial-gradient(600px 460px at 0% 90%,rgba(168,85,247,.28),transparent 70%),#0F0C18}
+footer{background:#0F0C18}
+/* content layer: regular material */
+.chip,.card,.stage,.d,.gov,.q3{background:var(--mat);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);
+  border-color:var(--hair);box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 16px 36px -18px rgba(76,29,149,.28)}
+.card{border-top:6px solid var(--c,var(--accent))}
+.cell{background:rgba(246,242,234,.70)}
+.card .type{background:rgba(124,58,237,.08);color:#5B21B6}
+.grow:first-child{background:rgba(237,228,255,.6)}
+.q3{border:1.5px solid var(--hair)}
+.agree div,.e,.step,.links a{background:var(--matd);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);
+  border:1px solid var(--haird);box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 18px 40px -20px rgba(0,0,0,.6)}
+.e{border-left:6px solid var(--c)}
+.agree i,.step::before{box-shadow:inset 0 2px 0 rgba(255,255,255,.45),0 6px 16px -4px rgba(124,58,237,.7)}
+.links a:hover{border-color:rgba(192,132,252,.7);background:rgba(76,29,149,.35)}
+/* functional layer: Liquid Glass (nav, buttons) */
+nav.top{top:12px;margin:12px auto 0;max-width:1060px;width:calc(100% - 24px);border-radius:999px;border:1px solid rgba(255,255,255,.75);
+  background:rgba(250,247,255,.66);-webkit-backdrop-filter:blur(30px) saturate(1.6);backdrop-filter:blur(30px) saturate(1.6);
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(124,58,237,.08),0 10px 30px -12px rgba(76,29,149,.35)}
+nav.top .wrap{height:52px;padding:0 22px}
+.bar{background:linear-gradient(90deg,#a855f7,#7c3aed);box-shadow:0 0 12px rgba(168,85,247,.7)}
+.btn{border:1.5px solid rgba(255,255,255,.8);background:rgba(255,255,255,.45);-webkit-backdrop-filter:blur(18px) saturate(1.5);backdrop-filter:blur(18px) saturate(1.5);
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.95),0 8px 22px -10px rgba(76,29,149,.35);transition:transform .2s,box-shadow .2s}
+.btn.primary{background:linear-gradient(180deg,rgba(168,85,247,.95),rgba(124,58,237,.95));border-color:rgba(255,255,255,.55);color:#fff;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.5),inset 0 -2px 6px rgba(76,29,149,.5),0 12px 28px -8px rgba(124,58,237,.6)}
+.btn:hover{border-color:rgba(255,255,255,.95);transform:translateY(-1px)}
+.btn.primary:hover{background:linear-gradient(180deg,#a855f7,#6d28d9)}
+.btn:focus-visible,nav.top a:focus-visible,.links a:focus-visible{outline:3px solid #7c3aed;outline-offset:3px}
+/* accessibility fallbacks */
+@media (prefers-reduced-transparency:reduce){
+  nav.top,.btn,.chip,.card,.stage,.d,.gov,.q3{background:#FFFDF8;-webkit-backdrop-filter:none;backdrop-filter:none}
+  .agree div,.e,.step,.links a{background:#1B1530;-webkit-backdrop-filter:none;backdrop-filter:none}
+  .btn.primary{background:#7c3aed}}
+@media (prefers-contrast:more){.chip,.card,.stage,.d,.gov,.q3,nav.top,.btn{background:#fff;border-color:#17202B}}
+@media (prefers-reduced-motion:reduce){.btn{transition:none}.btn:hover{transform:none}}
+@media (max-width:560px){nav.top{border-radius:18px;top:8px;width:calc(100% - 16px)}}
 </style>
 </head>
 <body>
