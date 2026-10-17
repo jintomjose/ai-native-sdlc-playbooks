@@ -13,7 +13,7 @@
 <style>
 :root{
   --bg:#F6F2EA;--paper:#FFFDF8;--ink:#17202B;--soft:#4A5563;--muted:#7A818C;--line:#E2DACB;
-  --night:#10151C;--night2:#1B2330;--accent:#E8561A;--accent-soft:#FFE6D6;
+  --night:#10151C;--night2:#1B2330;--accent:#7C3AED;--accent-soft:#EDE4FF;
   --anth:#C2603A;--atl:#1868DB;--goo:#C08A00;--shop:#007A5A;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -30,7 +30,7 @@ h3{font-size:22px;font-weight:800;letter-spacing:-.01em;line-height:1.2}
 .lead{font-size:clamp(18px,2.2vw,22px);color:var(--soft);max-width:760px;margin-top:20px}
 .dark .lead{color:#AEB7C4}
 em.hl{font-style:normal;color:var(--accent)}
-.dark em.hl{color:#FF8A4C}
+.dark em.hl{color:#C084FC}
 
 /* progress + nav */
 .bar{position:fixed;top:0;left:0;height:4px;background:var(--accent);width:0;z-index:20}
@@ -80,7 +80,7 @@ nav.top .brand{color:var(--ink);font-weight:800}
 .cell{border-radius:12px;padding:12px 14px;font-size:15px;line-height:1.4;background:var(--bg);border-left:5px solid var(--c)}
 .cell.gap{background:repeating-linear-gradient(45deg,#F1ECE2,#F1ECE2 6px,#EBE4D7 6px,#EBE4D7 12px);color:var(--muted);font-style:italic}
 code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;background:#EFE8DB;padding:1px 6px;border-radius:6px}
-.dark code{background:#263040;color:#FFD2BC}
+.dark code{background:#263040;color:#E9D5FF}
 
 /* disagreements */
 .dis{margin-top:44px;display:grid;gap:22px}
@@ -128,7 +128,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
 .step::before{counter-increment:s;content:counter(s);display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:var(--accent);color:#fff;font-weight:800;margin-bottom:14px}
 .step b{display:block;color:#fff;font-size:18px;margin-bottom:6px}
 .step span{font-size:14.5px;color:#AEB7C4;display:block}
-.step small{display:block;margin-top:10px;font-size:12.5px;font-weight:700;color:#FF8A4C}
+.step small{display:block;margin-top:10px;font-size:12.5px;font-weight:700;color:#C084FC}
 
 /* decisions */
 .decide{margin-top:40px;display:grid;gap:16px}
@@ -172,6 +172,7 @@ footer{padding:28px 0 48px;background:var(--night);color:#6F7B8C;font-size:13px}
   .spectrum .pin span{font-size:11.5px}
 }
 @media (min-width:561px){.grow .dots::before{content:none}}
+.dark .kicker{color:#C084FC}
 </style>
 </head>
 <body>
